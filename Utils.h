@@ -1,0 +1,1 @@
+void removePunct(std::string& word);
