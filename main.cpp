@@ -4,11 +4,12 @@
 
 
 int main() {
-  SpellChecker checker("training.txt");
+  SpellChecker checker("word_freq.txt");
 
   std::cout << checker.correction("expresion") << std::endl;
-  std::cout << checker.correction("pyton") << std::endl;
   std::cout << checker.correction("thea") << std::endl;
-  std::cout << checker.correction("asdasd") << std::endl;
+  std::cout << checker.correction("helk") << std::endl;
+  std::cout << checker.correction("javaf") << std::endl;
+  std::cout << checker.correction("programser") << std::endl;
   
 }

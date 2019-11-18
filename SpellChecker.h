@@ -7,8 +7,7 @@
 class SpellChecker {
   private:
     std::string alphabet = "abcdefghijklmnopqrstuv";
-    std::unordered_map<std::string, int> wordCount;
-    int wordTotal = 0;
+    std::unordered_map<std::string, long> wordCount;
     
 
   public:

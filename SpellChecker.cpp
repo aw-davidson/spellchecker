@@ -6,23 +6,36 @@
 #include "SpellChecker.h"
 #include "Utils.h"
 
+using std::string;
+using std::unordered_set;
+using std::vector;
+using std::ifstream;
 
-SpellChecker::SpellChecker(std::string path) {
-  std::ifstream infile(path);
-  std::string text;
-  while (infile >> text)
-  {
-      removePunct(text);
-      std::transform(text.begin(), text.end(), text.begin(), ::tolower);
-      ++wordCount[text];
-      ++wordTotal;
-  }
+
+SpellChecker::SpellChecker(string path) {
+    ifstream file(path);
+    string line;
+    
+    while (std::getline(file, line))
+    {
+        remove_if(line.begin(), line.end(), isspace);
+        string word;
+        string freq;
+        for (char c : line) {
+          if (std::isdigit(c)) {
+            freq.push_back(c);
+          } else {
+            word.push_back(c);
+          }
+        }
+        wordCount[word] = std::stol(freq);
+    }
 }
 
-std::string SpellChecker::correction(std::string word) {
-  std::string mostLikelyWord;
+string SpellChecker::correction(string word) {
+  string mostLikelyWord;
   double prob = 0.0;
-  for (std::string w : getCorrectionCandidates(word)) {
+  for (string w : getCorrectionCandidates(word)) {
     double p = probability(w);
     if (p > prob) {
       prob = p;
@@ -32,8 +45,8 @@ std::string SpellChecker::correction(std::string word) {
   return mostLikelyWord;
 }
 
-std::unordered_set<std::string> SpellChecker::oneEditDistance(std::string word) const {
-  std::vector<std::string> perms;
+unordered_set<string> SpellChecker::oneEditDistance(string word) const {
+  vector<string> perms;
   // deletes
   for (char c : word) {
     int i = word.find(c);
@@ -53,33 +66,29 @@ std::unordered_set<std::string> SpellChecker::oneEditDistance(std::string word) 
   }
   // transposes
   for (int i = 0; i < word.size() - 1; i++) {
-    std::string transposed = word;
+    string transposed = word;
     std::swap(transposed[i], transposed[i + 1]);
     perms.push_back(transposed);
   }
 
-  std::unordered_set<std::string> permsSet(perms.begin(), perms.end());
+  unordered_set<string> permsSet(perms.begin(), perms.end());
   return permsSet;
 };
 
-std::unordered_set<std::string> SpellChecker::twoEditDistance(std::string word) const {
-  std::unordered_set<std::string> twoEdits;
-  for (std::string w : oneEditDistance(word)) {
-    std::unordered_set<std::string> oneEdits = oneEditDistance(w);
+unordered_set<string> SpellChecker::twoEditDistance(string word) const {
+  unordered_set<string> twoEdits;
+  for (string w : oneEditDistance(word)) {
+    unordered_set<string> oneEdits = oneEditDistance(w);
     twoEdits.insert(oneEdits.begin(), oneEdits.end());
   }
   return twoEdits;
 };
 
-// std::unordered_set<std::string> SpellChecker::filterKnownWords() {
-
-// };
-
-double SpellChecker::probability(std::string word) {
-  return  wordCount[word] / (double)wordTotal;
+double SpellChecker::probability(string word) {
+  return  wordCount[word];
 };
 
-std::unordered_set<std::string> SpellChecker::filterKnownWords(std::unordered_set<std::string> words) {
+unordered_set<string> SpellChecker::filterKnownWords(unordered_set<string> words) {
    for(auto it = words.begin(); it != words.end(); ) {
         if(!wordCount[*it])
             it = words.erase(it);
@@ -89,9 +98,9 @@ std::unordered_set<std::string> SpellChecker::filterKnownWords(std::unordered_se
     return words;
 };
 
-  std::unordered_set<std::string> SpellChecker::getCorrectionCandidates(std::string word) {
-    std::unordered_set<std::string> ones = filterKnownWords(oneEditDistance(word));
-    std::unordered_set<std::string> twos = filterKnownWords(twoEditDistance(word));
+  unordered_set<string> SpellChecker::getCorrectionCandidates(string word) {
+    unordered_set<string> ones = filterKnownWords(oneEditDistance(word));
+    unordered_set<string> twos = filterKnownWords(twoEditDistance(word));
     ones.insert(twos.begin(), twos.end());
     return ones;
   }
