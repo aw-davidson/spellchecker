@@ -1,11 +1,12 @@
 #include <iostream>
 #include <unordered_set>
-#include "SpellChecker.h"
+#include "SpellChecker/SpellChecker.h"
 
 
 int main() {
-  SpellChecker checker("word_freq.txt");
+  SpellChecker checker("utils/word_freq.txt");
 
+  std::cout << "Running SpellChecker";
   std::cout << checker.correction("expresion") << std::endl;
   std::cout << checker.correction("thea") << std::endl;
   std::cout << checker.correction("helk") << std::endl;

@@ -4,7 +4,6 @@
 #include <unordered_map>
 
 #include "SpellChecker.h"
-#include "Utils.h"
 
 using std::string;
 using std::unordered_set;
