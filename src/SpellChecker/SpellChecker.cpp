@@ -83,10 +83,6 @@ unordered_set<string> SpellChecker::twoEditDistance(string word) const {
   return twoEdits;
 };
 
-double SpellChecker::probability(string word) {
-  return  wordCount[word];
-};
-
 unordered_set<string> SpellChecker::filterKnownWords(unordered_set<string> words) {
    for(auto it = words.begin(); it != words.end(); ) {
         if(!wordCount[*it])

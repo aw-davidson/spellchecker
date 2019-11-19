@@ -4,7 +4,7 @@
 #include "../src/SpellChecker/SpellChecker.h"
 
 TEST_CASE( "SpellChecker.correction", "[SpellChecker]" ) {
-    SpellChecker checker("utils/word_freq.txt");
+    SpellChecker checker("src/utils/word_freq.txt");
 
     REQUIRE( checker.correction("expresion") == "expression" );
     REQUIRE( checker.correction("hellp") == "help" );
@@ -14,5 +14,5 @@ TEST_CASE( "SpellChecker.correction", "[SpellChecker]" ) {
     REQUIRE( checker.correction("spriag") == "spring" );
 
     // constructor should throw if no path or wrong path
-    
+
 }

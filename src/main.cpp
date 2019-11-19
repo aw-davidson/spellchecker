@@ -4,7 +4,7 @@
 
 
 int main() {
-  SpellChecker checker("utils/word_freq.txt");
+  SpellChecker checker("src/utils/word_freq.txt");
 
   std::cout << "Running SpellChecker";
   std::cout << checker.correction("expresion") << std::endl;
