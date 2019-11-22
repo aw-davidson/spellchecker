@@ -14,6 +14,11 @@ using std::ifstream;
 SpellChecker::SpellChecker(string path) {
     ifstream file(path);
     string line;
+
+    if (!file.good())
+    {
+      throw std::runtime_error("The path does not exist: " + path);
+    }
     
     while (std::getline(file, line))
     {
