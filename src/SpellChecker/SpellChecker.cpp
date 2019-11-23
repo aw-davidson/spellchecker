@@ -36,20 +36,16 @@ SpellChecker::SpellChecker(string path) {
     }
 }
 
-string SpellChecker::correction(string word) {
-  string mostLikelyWord;
-  double prob = 0.0;
-  for (string w : getCorrectionCandidates(word)) {
-    double p = probability(w);
-    if (p > prob) {
-      prob = p;
-      mostLikelyWord = w;
-    }
-  }
-  return mostLikelyWord;
+string SpellChecker::correction(string const& word) const {
+  const unordered_set<string> candidates = getCorrectionCandidates(word);
+
+  return *std::max_element(begin(candidates), end(candidates),
+            [this](const string& candidateA,  const string& candidateB) {
+              return probability(candidateA) < probability(candidateB);
+            });
 }
 
-unordered_set<string> SpellChecker::oneEditDistance(string word) const {
+unordered_set<string> SpellChecker::oneEditDistance(string const& word) const {
   vector<string> perms;
   // deletes
   for (char c : word) {
@@ -79,7 +75,7 @@ unordered_set<string> SpellChecker::oneEditDistance(string word) const {
   return permsSet;
 };
 
-unordered_set<string> SpellChecker::twoEditDistance(string word) const {
+unordered_set<string> SpellChecker::twoEditDistance(string const& word) const {
   unordered_set<string> twoEdits;
   for (string w : oneEditDistance(word)) {
     unordered_set<string> oneEdits = oneEditDistance(w);
@@ -88,9 +84,9 @@ unordered_set<string> SpellChecker::twoEditDistance(string word) const {
   return twoEdits;
 };
 
-unordered_set<string> SpellChecker::filterKnownWords(unordered_set<string> words) {
+unordered_set<string> SpellChecker::filterKnownWords(unordered_set<string>& words) const {
    for(auto it = words.begin(); it != words.end(); ) {
-        if(!wordCount[*it])
+        if(wordCount.find(*it) == wordCount.end())
             it = words.erase(it);
         else
             ++it;
@@ -98,9 +94,11 @@ unordered_set<string> SpellChecker::filterKnownWords(unordered_set<string> words
     return words;
 };
 
-  unordered_set<string> SpellChecker::getCorrectionCandidates(string word) {
-    unordered_set<string> ones = filterKnownWords(oneEditDistance(word));
-    unordered_set<string> twos = filterKnownWords(twoEditDistance(word));
+  unordered_set<string> SpellChecker::getCorrectionCandidates(string const& word) const {
+    unordered_set<string> oneEdits = oneEditDistance(word);
+    unordered_set<string> twoEdits = twoEditDistance(word);
+    unordered_set<string> ones = filterKnownWords(oneEdits);
+    unordered_set<string> twos = filterKnownWords(twoEdits);
     ones.insert(twos.begin(), twos.end());
     return ones;
   }
