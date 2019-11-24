@@ -1,10 +1,8 @@
 # SpellChecker
 
-A project inspired by Peter Norvig's essay [How to Write a Spelling Corrector](http://norvig.com/spell-correct.html)
+A project inspired by Peter Norvig's essay [How to Write a Spelling Corrector](http://norvig.com/spell-correct.html) written in modern C++ and tested with Catch2.
 
 On average running the correction function takes 1.4 seconds per 10 words.
-
-## Demo
 
 ```c++
 int main() {
@@ -13,6 +11,8 @@ int main() {
   std::cout << checker.correction("expresion") << std::endl; // expression
   std::cout << checker.correction("thea") << std::endl; // the
   std::cout << checker.correction("helpo") << std::endl; // hello
+  std::cout << checker.correction("queot") << std::endl; // quote
+  std::cout << checker.correction("peotry") << std::endl; // poetry
 }
 ```
 
