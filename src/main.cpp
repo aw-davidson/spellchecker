@@ -18,8 +18,8 @@ int main() {
     std::cout << checker.correction("helk") << std::endl;
     std::cout << checker.correction("javaf") << std::endl;
     std::cout << checker.correction("javasipt") << std::endl;
-    std::cout << checker.correction("queot") << std::endl;
-    std::cout << checker.correction("hous") << std::endl;
+    std::cout << checker.correction("peotry") << std::endl;
+    std::cout << checker.correction("auxilaary") << std::endl;
     std::cout << checker.correction("cropg") << std::endl;
     std::cout << checker.correction("velluam") << std::endl;
     std::cout << checker.correction("haiir") << std::endl;
