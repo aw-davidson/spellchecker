@@ -37,6 +37,7 @@ SpellChecker::SpellChecker(string path) {
 }
 
 string SpellChecker::correction(string const& word) const {
+  if (wordCount.find(word) != wordCount.end()) { return word; }
   const unordered_set<string> candidates = getCorrectionCandidates(word);
 
   return *std::max_element(begin(candidates), end(candidates),
