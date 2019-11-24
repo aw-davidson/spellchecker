@@ -1,8 +1,8 @@
 # SpellChecker
 
-A project inspired by Peter Norvig's essay [How to Write a Spelling Corrector](http://norvig.com/spell-correct.html) written in modern C++ and tested with Catch2.
+A project inspired by Peter Norvig's essay [How to Write a Spelling Corrector](http://norvig.com/spell-correct.html) written in modern C++ and tested with [Catch2](https://github.com/catchorg/Catch2).
 
-On average running the correction function takes 1.4 seconds per 10 words.
+On average, running the correction function takes 1.4 seconds per 10 words.
 
 ```c++
 int main() {
