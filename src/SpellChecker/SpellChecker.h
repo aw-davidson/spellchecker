@@ -15,7 +15,7 @@ class SpellChecker {
     std::unordered_set<std::string> oneEditDistance(std::string const& word) const;
     std::unordered_set<std::string> twoEditDistance(std::string const& word) const;
     std::unordered_set<std::string> getCorrectionCandidates (std::string const& word) const;
-    std::unordered_set<std::string> filterKnownWords(std::unordered_set<std::string>& words) const;
+    std::unordered_set<std::string> filterKnownWords(std::unordered_set<std::string> const& words) const;
 
   public:
     SpellChecker(std::string path);
