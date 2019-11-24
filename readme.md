@@ -26,4 +26,4 @@ int main() {
 
 ## See It In Action
 
-https://repl.it/@awdavids/spellchecker
+https://repl.it/@awdavids/SpellChecker
